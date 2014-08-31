@@ -10,7 +10,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0FB9C2
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveWarehouse.Api", "EveWarehouse.Api\EveWarehouse.Api.csproj", "{69D5FEDC-319D-4F92-96CB-9EE48CF76E8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveWarehouse.Infrastructure", "EveWarehouse.Infrastructure\EveWarehouse.Infrastructure.csproj", "{AA953475-9F48-482D-925A-E10EEC04FF82}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69D5FEDC-319D-4F92-96CB-9EE48CF76E8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69D5FEDC-319D-4F92-96CB-9EE48CF76E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69D5FEDC-319D-4F92-96CB-9EE48CF76E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69D5FEDC-319D-4F92-96CB-9EE48CF76E8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA953475-9F48-482D-925A-E10EEC04FF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA953475-9F48-482D-925A-E10EEC04FF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA953475-9F48-482D-925A-E10EEC04FF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA953475-9F48-482D-925A-E10EEC04FF82}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
