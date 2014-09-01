@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Builder;
+using Autofac.Core.Lifetime;
 using Autofac.Integration.WebApi;
 using EveWarehouse.Infrastructure.Identity;
 using EveWarehouse.Infrastructure.Identity.Providers;
@@ -11,6 +12,8 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Owin;
 using System;
+using System.Linq;
+using System.Web;
 using System.Web.Http;
 
 [assembly: OwinStartup(typeof(EveWarehouse.Api.Startup))]
@@ -43,28 +46,19 @@ namespace EveWarehouse.Api
         {
             var builder = new ContainerBuilder();
 
-            builder
-                .Register(_ => CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString")))
-                .AsSelf()
-                .SingleInstance();
+            var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            builder.RegisterInstance(storageAccount).SingleInstance();
 
             builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudFileClient()).AsSelf().InstancePerRequest();
             builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudQueueClient()).AsSelf().InstancePerRequest();
             builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudTableClient()).AsSelf().InstancePerRequest();
 
-            builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
-            builder.Register<Func<ApplicationUserManager>>(context => () => context.Resolve<ApplicationUserManager>());
+            builder.RegisterType<ApplicationUserManager>().InstancePerRequest();
 
             builder
                 .RegisterType<UserStore<ApplicationUser>>()
                 .AsImplementedInterfaces<IUserStore<ApplicationUser>, ConcreteReflectionActivatorData>()
                 .InstancePerRequest();
-
-            builder.RegisterType<SimpleAuthorizationServerProvider>()
-                .AsImplementedInterfaces<IOAuthAuthorizationServerProvider, ConcreteReflectionActivatorData>().SingleInstance();
-
-            //builder.RegisterType<SimpleRefreshTokenProvider>()
-            //    .AsImplementedInterfaces<IAuthenticationTokenProvider, ConcreteReflectionActivatorData>().SingleInstance();
 
             builder.RegisterApiControllers(typeof(Startup).Assembly);
 
@@ -78,12 +72,23 @@ namespace EveWarehouse.Api
                     AllowInsecureHttp = true,
                     TokenEndpointPath = new PathString("/api/token"),
                     AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
-                    Provider = container.Resolve<IOAuthAuthorizationServerProvider>(),
-                    //RefreshTokenProvider = container.Resolve<IAuthenticationTokenProvider>()
+                    Provider = new SimpleAuthorizationServerProvider(GetUserManager)
                 };
 
             app.UseOAuthAuthorizationServer(options);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+        }
+
+        private static ApplicationUserManager GetUserManager()
+        {
+            var context = HttpContext.Current.Request.GetOwinContext();
+            var scope = context.Environment.FirstOrDefault(f => f.Key == "autofac:OwinLifetimeScope").Value as LifetimeScope;
+            if (scope == null)
+            {
+                throw new Exception("RequestScope cannot be null.");
+            }
+
+            return scope.GetService(typeof(ApplicationUserManager)) as ApplicationUserManager;
         }
     }
 }

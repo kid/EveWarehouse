@@ -24,7 +24,8 @@ namespace EveWarehouse.Infrastructure.Identity.Providers
         {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            var user = await _userManagerFactory().FindAsync(context.UserName, context.Password);
+            var userManager = _userManagerFactory();
+            var user = await userManager.FindAsync(context.UserName, context.Password);
             if (user == null)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
