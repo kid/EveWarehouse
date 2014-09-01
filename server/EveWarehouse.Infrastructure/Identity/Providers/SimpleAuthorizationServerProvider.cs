@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin.Security.OAuth;
+using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -6,11 +7,11 @@ namespace EveWarehouse.Infrastructure.Identity.Providers
 {
     public class SimpleAuthorizationServerProvider : OAuthAuthorizationServerProvider
     {
-        private readonly ApplicationUserManager _userManager;
+        private readonly Func<ApplicationUserManager> _userManagerFactory;
 
-        public SimpleAuthorizationServerProvider(ApplicationUserManager userManager)
+        public SimpleAuthorizationServerProvider(Func<ApplicationUserManager> userManagerFactory)
         {
-            _userManager = userManager;
+            _userManagerFactory = userManagerFactory;
         }
 
         public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
@@ -23,7 +24,7 @@ namespace EveWarehouse.Infrastructure.Identity.Providers
         {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
 
-            var user = await _userManager.FindAsync(context.UserName, context.Password);
+            var user = await _userManagerFactory().FindAsync(context.UserName, context.Password);
             if (user == null)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");

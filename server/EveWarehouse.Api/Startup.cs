@@ -23,12 +23,13 @@ namespace EveWarehouse.Api
         {
             var container = CreateContainer();
 
+            // Needs to be called as early as possible.
+            app.UseAutofacMiddleware(container);
+
             var config = new HttpConfiguration
                 {
                     DependencyResolver = new AutofacWebApiDependencyResolver(container)
                 };
-
-            app.UseAutofacMiddleware(container);
 
             ConfigureOAuth(app, container);
             WebApiConfig.Register(config);
@@ -44,15 +45,20 @@ namespace EveWarehouse.Api
 
             builder
                 .Register(_ => CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString")))
-                .AsSelf();
+                .AsSelf()
+                .SingleInstance();
+
+            builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudFileClient()).AsSelf().InstancePerRequest();
+            builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudQueueClient()).AsSelf().InstancePerRequest();
+            builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudTableClient()).AsSelf().InstancePerRequest();
+
+            builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
+            builder.Register<Func<ApplicationUserManager>>(context => () => context.Resolve<ApplicationUserManager>());
 
             builder
                 .RegisterType<UserStore<ApplicationUser>>()
-                .AsImplementedInterfaces<IUserStore<ApplicationUser>, ConcreteReflectionActivatorData>();
-
-            builder
-                .RegisterType<ApplicationUserManager>()
-                .AsSelf();
+                .AsImplementedInterfaces<IUserStore<ApplicationUser>, ConcreteReflectionActivatorData>()
+                .InstancePerRequest();
 
             builder.RegisterType<SimpleAuthorizationServerProvider>()
                 .AsImplementedInterfaces<IOAuthAuthorizationServerProvider, ConcreteReflectionActivatorData>().SingleInstance();

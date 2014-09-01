@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Globalization;
@@ -15,11 +14,10 @@ namespace EveWarehouse.Infrastructure.Identity
         private readonly Func<string, string> _partitionKeyFromId;
         private readonly CloudTable _userTableReference;
 
-        public UserStore(CloudStorageAccount storageAccount)
+        public UserStore(CloudTableClient tableClient)
         {
             _partitionKeyFromId = id => id.GetHashCode().ToString(CultureInfo.InvariantCulture);
 
-            var tableClient = storageAccount.CreateCloudTableClient();
             _userTableReference = tableClient.GetTableReference("Users");
             _userTableReference.CreateIfNotExists();
         }
