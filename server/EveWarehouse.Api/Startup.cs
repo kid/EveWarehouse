@@ -8,10 +8,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
-using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Storage;
 using Owin;
 using System;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -46,7 +46,7 @@ namespace EveWarehouse.Api
         {
             var builder = new ContainerBuilder();
 
-            var storageAccount = CloudStorageAccount.Parse(CloudConfigurationManager.GetSetting("StorageConnectionString"));
+            var storageAccount = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
             builder.RegisterInstance(storageAccount).SingleInstance();
 
             builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudFileClient()).AsSelf().InstancePerRequest();
