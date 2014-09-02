@@ -3,13 +3,20 @@
 # top-most EditorConfig file
 root = true
 
-# Unix-style newlines with a newline ending every file
+# newline ending every file
 [*]
-end_of_line = lf
 insert_final_newline = true
 
 # Tab indentation (no size specified)
 [*.js]
+indent_style = space
+indent_size = 2
+
+[*.html]
+indent_style = space
+indent_size = 2
+
+[*.less]
 indent_style = space
 indent_size = 2
 

@@ -1,23 +1,31 @@
 (function () {
   'use strict';
 
+  angular
+    .module('app', [
+      'app.auth',
+      'ui.router',
+      'LocalStorageModule'
+    ])
+    .config(RouterConfig);
+
   function RouterConfig($stateProvider, $urlRouterProvider) {
     $stateProvider.state('login', {
       url: '/login',
-      controller: 'LoginController'
+      templateUrl: 'auth/login.html'
+    });
+
+    $stateProvider.state('register', {
+      url: '/register',
+      templateUrl: 'auth/register.html'
     });
 
     $stateProvider.state('home', {
       url: '/home',
-      controller: 'HomeController'
+      controller: function () {
+        console.log('home');
+      }
     });
   }
-
-  angular
-    .module('app', [
-      'ui.router',
-      'app.auth'
-    ])
-    .config(RouterConfig);
 
 })();

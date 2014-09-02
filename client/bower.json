@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "angular": "~1.2.23",
-    "angular-ui-router": "~0.2.11"
+    "angular-ui-router": "~0.2.11",
+    "angular-local-storage": "~0.0.7"
   }
 }
