@@ -8,15 +8,52 @@ var stylish = require('jshint-stylish');
 var sourcemaps = require('gulp-sourcemaps');
 var ngAnnotate = require('gulp-ng-annotate');
 var templateCache = require('gulp-angular-templatecache');
+var rimraf = require('gulp-rimraf');
 
-gulp.task('styles', function () {
+var paths = {
+  less: ['./src/less/app.less'],
+  js: ['./src/js/**/_module.js', './src/js/**/*.js'],
+  build: {
+    css: './build/css',
+    js: './build/js'
+  },
+  dist: {
+    css: './dist/css/',
+    js: './dist/js/',
+  },
+  vendor: {
+    css: [],
+    js: [
+      './bower_components/angular/angular.js',
+      './bower_components/angular-ui-router/release/angular-ui-router.js',
+      './bower_components/angular-local-storage/angular-local-storage.js'
+    ]
+  }
+};
+
+/**
+ * Deletes the content of the build and dist folders
+ */
+gulp.task('clean', function () {
   gulp
-    .src('src/css/app.less')
+    .src([
+      './build/**/*',
+      './dist/**/*'
+    ], {
+      read: false
+    })
+    .pipe(rimraf({
+      force: true
+    }));
+});
+
+
+gulp.task('less', function () {
+  gulp
+    .src(paths.less)
     .pipe(less())
-    .pipe(minify({
-      keepBreak: true
-    }))
-    .pipe(gulp.dest('dist'))
+    .pipe(minify())
+    .pipe(gulp.dest(paths.build.css));
 });
 
 gulp.task('scripts', function () {
@@ -44,7 +81,7 @@ gulp.task('jshint', function () {
     .pipe(jshint.reporter(stylish));
 })
 
-gulp.task('watch', ['jshint', 'scripts', 'styles', 'templates'], function () {
+gulp.task('watch', function () {
   gulp.watch('src/css/**/*.less', ['styles']);
   gulp.watch('src/js/**/*.js', ['jshint', 'scripts']);
   gulp.watch('src/js/**/*.html', ['templates']);

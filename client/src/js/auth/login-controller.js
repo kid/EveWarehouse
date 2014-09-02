@@ -3,9 +3,9 @@
 
   angular
     .module('app.auth')
-    .controller('loginController', loginController);
+    .controller('LoginController', LoginController);
 
-  function loginController($state, authService) {
+  function LoginController($state, authService) {
 
     /* jshint validthis: true */
     var vm = this;

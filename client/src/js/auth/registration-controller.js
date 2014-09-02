@@ -3,9 +3,9 @@
 
   angular
     .module('app.auth')
-    .controller('registrationController', registrationController);
+    .controller('RegistrationController', RegistrationController);
 
-  function registrationController($state, authService) {
+  function RegistrationController($state, authService) {
 
     /* jshint validthis: true */
     var vm = this;
