@@ -9,6 +9,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var ngAnnotate = require('gulp-ng-annotate');
 var templateCache = require('gulp-angular-templatecache');
 var rimraf = require('gulp-rimraf');
+var inject = require('gulp-inject');
 
 var paths = {
   less: ['./src/less/app.less'],
@@ -42,9 +43,7 @@ gulp.task('clean', function () {
     ], {
       read: false
     })
-    .pipe(rimraf({
-      force: true
-    }));
+    .pipe(rimraf());
 });
 
 
@@ -52,26 +51,35 @@ gulp.task('less', function () {
   gulp
     .src(paths.less)
     .pipe(less())
-    .pipe(minify())
-    .pipe(gulp.dest(paths.build.css));
+  // .pipe(minify())
+  .pipe(gulp.dest(paths.build.css));
 });
 
 gulp.task('scripts', function () {
   gulp
-    .src(['src/js/**/module.js', 'src/js/**/*.js'])
+    .src(paths.js)
     .pipe(concat('app.js'))
-    .pipe(ngAnnotate())
-    .pipe(uglify())
-    .pipe(gulp.dest('dist'));
+  // .pipe(ngAnnotate())
+  // .pipe(uglify())
+  .pipe(gulp.dest(paths.build.js));
+});
+
+gulp.task('vendor', function () {
+  gulp
+    .src(paths.vendor.js)
+    .pipe(concat('vendor.js'))
+    .pipe(gulp.dest(paths.build.js));
 });
 
 gulp.task('templates', function () {
   gulp
     .src('src/js/**/*.html')
-    .pipe(templateCache())
-    .pipe(ngAnnotate())
-    .pipe(uglify())
-    .pipe(gulp.dest('dist'));
+    .pipe(templateCache({
+      module: 'app'
+    }))
+  // .pipe(ngAnnotate())
+  // .pipe(uglify())
+  .pipe(gulp.dest(paths.build.js));
 });
 
 gulp.task('jshint', function () {
@@ -79,10 +87,24 @@ gulp.task('jshint', function () {
     .src('src/js/**/*.js')
     .pipe(jshint())
     .pipe(jshint.reporter(stylish));
-})
+});
 
 gulp.task('watch', function () {
-  gulp.watch('src/css/**/*.less', ['styles']);
+  gulp.watch(paths.less, ['less']);
   gulp.watch('src/js/**/*.js', ['jshint', 'scripts']);
   gulp.watch('src/js/**/*.html', ['templates']);
 });
+
+gulp.task('inject', ['less', 'vendor', 'scripts', 'templates'], function () {
+  var sources = gulp.src(['**/*.css', 'js/**/*.js'], {
+    read: false,
+    cwd: 'build'
+  });
+
+  gulp
+    .src('./src/index.html')
+    .pipe(inject(sources))
+    .pipe(gulp.dest('./build'))
+});
+
+gulp.task('default', ['jshint', 'less', 'scripts', 'templates', 'vendor', 'inject', 'watch']);
