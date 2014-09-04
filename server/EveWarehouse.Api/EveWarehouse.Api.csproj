@@ -52,6 +52,33 @@
     <Reference Include="Autofac.Integration.WebApi.Owin">
       <HintPath>..\packages\Autofac.WebApi2.Owin.3.2.0\lib\net45\Autofac.Integration.WebApi.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="EveLib.Core">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.Element43">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.Element43.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.EveCentral">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.EveCentral.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.EveCrest">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.EveCrest.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.EveMarketData">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.EveMarketData.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.EveOnline">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.EveOnline.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.EveWho">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.EveWho.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.StaticData">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.StaticData.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.ZKillboard">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.ZKillboard.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -115,8 +142,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Cors">
-      <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
+    <Reference Include="System.Web.Cors, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.2\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />

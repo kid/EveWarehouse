@@ -32,6 +32,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EveLib.Core">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.Element43">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.Element43.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.EveCentral">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.EveCentral.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.EveCrest">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.EveCrest.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.EveMarketData">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.EveMarketData.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.EveOnline">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.EveOnline.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.EveWho">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.EveWho.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.StaticData">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.StaticData.dll</HintPath>
+    </Reference>
+    <Reference Include="EveLib.ZKillboard">
+      <HintPath>..\packages\eZet.EveLib.2.0.3\lib\EveLib.ZKillboard.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
@@ -69,14 +96,18 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="StackExchange.Redis">
+      <HintPath>..\packages\StackExchange.Redis.1.0.330\lib\net45\StackExchange.Redis.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Cors">
-      <HintPath>..\packages\Microsoft.AspNet.Cors.5.0.0\lib\net45\System.Web.Cors.dll</HintPath>
+    <Reference Include="System.Web.Cors, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.2\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -85,6 +116,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EveLib\AzureRedisCache.cs" />
     <Compile Include="Identity\ApplicationUser.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Identity\IdentityUser.cs" />
@@ -98,6 +130,7 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
