@@ -7,24 +7,36 @@ namespace EveWarehouse.Infrastructure.EveLib
 {
     public class AzureRedisCache : IEveLibCache
     {
+        private readonly ConnectionMultiplexer _redis;
         private const string KeyFormat = "EveLib_{0}";
 
-        public async Task StoreAsync(Uri uri, DateTime cacheTime, string data)
+        public AzureRedisCache(ConnectionMultiplexer redis)
         {
-            var connection = await ConnectionMultiplexer.ConnectAsync("");
-            var cache = connection.GetDatabase();
+            if (redis == null) throw new ArgumentNullException("redis");
 
-            await cache.StringSetAsync(string.Format(KeyFormat, uri), data, cacheTime - DateTime.UtcNow);
+            _redis = redis;
         }
 
-        public Task<string> LoadAsync(Uri uri)
+        public Task StoreAsync(Uri uri, DateTime cacheTime, string data)
         {
-            throw new NotImplementedException();
+            return _redis.GetDatabase().StringSetAsync(GetKey(uri), data, cacheTime - DateTime.UtcNow, flags: CommandFlags.FireAndForget);
+        }
+
+        public async Task<string> LoadAsync(Uri uri)
+        {
+            return await _redis.GetDatabase().StringGetAsync(GetKey(uri));
         }
 
         public bool TryGetExpirationDate(Uri uri, out DateTime value)
         {
-            throw new NotImplementedException();
+            var ttl = _redis.GetDatabase().KeyTimeToLive(GetKey(uri));
+            value = ttl.HasValue ? DateTime.UtcNow + ttl.Value : DateTime.MinValue;
+            return ttl.HasValue;
+        }
+
+        private static string GetKey(Uri uri)
+        {
+            return string.Format(KeyFormat, uri);
         }
     }
 }

@@ -2,14 +2,17 @@
 using Autofac.Builder;
 using Autofac.Core.Lifetime;
 using Autofac.Integration.WebApi;
+using EveWarehouse.Infrastructure.EveLib;
 using EveWarehouse.Infrastructure.Identity;
 using EveWarehouse.Infrastructure.Identity.Providers;
+using eZet.EveLib.Core.Cache;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.WindowsAzure.Storage;
 using Owin;
+using StackExchange.Redis;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -52,6 +55,15 @@ namespace EveWarehouse.Api
             builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudFileClient()).AsSelf().InstancePerRequest();
             builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudQueueClient()).AsSelf().InstancePerRequest();
             builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudTableClient()).AsSelf().InstancePerRequest();
+
+            builder.Register(_ =>
+                {
+                    var connectionString = ConfigurationManager.ConnectionStrings["RedisCache"].ConnectionString;
+                    return ConnectionMultiplexer.Connect(connectionString);
+                })
+                .SingleInstance();
+
+            builder.RegisterType<AzureRedisCache>().As<IEveLibCache>().SingleInstance();
 
             builder.RegisterType<ApplicationUserManager>().InstancePerRequest();
 
