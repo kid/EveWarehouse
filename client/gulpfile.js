@@ -91,7 +91,7 @@ gulp.task('build', function () {
 });
 
 gulp.task('clean', function () {
-  es.wait(gulp.src('./dist/**/*', {
+  es.wait(gulp.src('./dist/js/*', './dist/css/*', {
     read: false
   }).pipe(rimraf()));
 });

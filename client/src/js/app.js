@@ -7,7 +7,9 @@
       'ui.router',
       'LocalStorageModule'
     ])
-    .config(RouterConfig);
+    .constant('API_ROOT_URL', 'https://evewarehouse.azurewebsites.net/api/')
+    .config(RouterConfig)
+    .config(HttpProviderConfig);
 
   function RouterConfig($stateProvider, $urlRouterProvider) {
     $stateProvider.state('login', {
@@ -26,6 +28,10 @@
         console.log('home');
       }
     });
+  }
+
+  function HttpProviderConfig($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorService');
   }
 
 })();
