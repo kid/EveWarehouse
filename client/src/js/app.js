@@ -3,7 +3,6 @@
 
   angular
     .module('app', [
-      'templates',
       'app.auth',
       'ui.router',
       'LocalStorageModule'
