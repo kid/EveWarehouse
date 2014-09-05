@@ -8,7 +8,6 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var sourcemaps = require('gulp-sourcemaps');
 var ngAnnotate = require('gulp-ng-annotate');
-var angularFilesort = require('gulp-angular-filesort');
 var templateCache = require('gulp-angular-templatecache');
 var rimraf = require('gulp-rimraf');
 var inject = require('gulp-inject');
@@ -45,7 +44,7 @@ function BuildStyles() {
     .pipe(gulp.dest(paths.dist.css));
 }
 
-function BuildVendors() {
+function BuildVendorsScripts() {
   return gulp
     .src(paths.vendor.js)
     .pipe(sourcemaps.init())
@@ -76,7 +75,7 @@ function BuildScripts() {
 }
 
 gulp.task('build', function () {
-  var sources = es.merge(BuildVendors(), BuildStyles(), BuildScripts());
+  var sources = es.merge(BuildStyles(), BuildVendorsScripts(), BuildScripts());
   sources = sources.pipe(order([
     'vendor-*.{css,js}',
     'app-*.{css,js}'
