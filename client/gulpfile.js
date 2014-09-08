@@ -21,10 +21,12 @@ var paths = {
   js: ['./src/js/**/_module.js', './src/js/**/*.js'],
   templates: ['./src/js/**/*.html'],
   dist: {
+    fonts: './dist/fonts/',
     css: './dist/css/',
     js: './dist/js/',
   },
   build: {
+    fonts: './build/fonts/',
     css: './build/css/',
     js: './build/js/'
   },
@@ -34,9 +36,18 @@ var paths = {
       './bower_components/angular/angular.min.js',
       './bower_components/angular-ui-router/release/angular-ui-router.min.js',
       './bower_components/angular-local-storage/angular-local-storage.min.js'
+    ],
+    fonts: [
+      './bower_components/bootstrap/fonts/*'
     ]
   }
 };
+
+function CopyFonts(dist) {
+  return gulp
+    .src(paths.vendor.fonts)
+    .pipe(gulp.dest(dist === true ? paths.dist.fonts : paths.build.fonts));
+}
 
 function BuildStyles(dist) {
   var stream = gulp
@@ -112,6 +123,8 @@ function BuildAll(dist) {
     .pipe(gulp.dest(dist === true ? './dist' : './build'));
 }
 
+
+
 gulp.task('styles', function () {
   BuildStyles(false);
 });
@@ -125,10 +138,12 @@ gulp.task('scripts', function () {
 })
 
 gulp.task('build', function () {
+  CopyFonts(false);
   BuildAll(false);
 });
 
 gulp.task('dist', function () {
+  CopyFonts(true);
   BuildAll(true);
 })
 

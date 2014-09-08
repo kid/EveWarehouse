@@ -25,9 +25,16 @@
     });
 
     $stateProvider.state('home', {
+      abstract: true,
+      templateUrl: 'shell.html'
+    });
+
+    $stateProvider.state('home.dashboard', {
       url: '/home',
-      controller: function () {
-        console.log('home');
+      views: {
+        'content': {
+          template: '<h1>foo</h1>'
+        }
       }
     });
   }
@@ -38,6 +45,8 @@
 
   function OnRun($rootScope, authService) {
     var darkPages = ['login', 'register'];
+
+    $rootScope.skin = 'black';
 
     $rootScope.$on('$stateChangeStart', function (event, toState) {
       $rootScope.isDarkBackground = darkPages.indexOf(toState.name) !== -1;

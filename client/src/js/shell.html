@@ -1,0 +1,39 @@
+<header class="header" ng-controller="ShellController as shell">
+  <a ui-sref="home.dashboard" class="logo">EveWarehouse</a>
+  <nav class="navbar navbar-static-top" role="navigation">
+    <a href="#" class="navbar-btn sidebar-toggle" role="button">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </a>
+    <div class="navbar-right">
+      <ul class="nav navbar-nav">
+        <li class="dropdown user user-menu">
+          <a class="dropdown-toggle">
+            <i class="glyphicon glyphicon-user"></i>
+            <span>
+              {{ shell.authentication.userName }} <i class="caret"></i>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="wrapper row-offcanvas row-offcanvas-left">
+  <aside class="left-side sidebar-off-canvas">
+    <section class="sidebar">
+      <form class="sidebar-form">
+        <div class="input-group">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
+          <span class="input-group-btn">
+            <button type="submit" name="seach" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+            </button>
+          </span>
+        </div>
+      </form>
+    </section>
+  </aside>
+  <aside class="right-side" ui-view="content"></aside>
+</div>
