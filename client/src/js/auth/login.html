@@ -1,9 +1,18 @@
-<form class="form-login" role="form" ng-controller="LoginController as login">
-  <h2 class="form-login-heading">Login</h2>
-  <input type="text" class="form-control" placeholder="Username" ng-model="login.loginData.userName" required autofocus>
-  <input type="password" class="form-control" placeholder="Password" ng-model="login.loginData.password" required>
-  <button class="btn btn-lg btn-info btn-block" type="submit" ng-click="login.login()">Login</button>
-  <div class="alert alert-danger" ng-hide="login.message == ''">
-    {{login.message}}
-  </div>
-</form>
+<div class="form-box" id="login-box" ng-controller="LoginController as vm">
+  <div class="header">Sign In</div>
+  <form role="form">
+    <div class="body bg-gray">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Username" ng-model="vm.loginData.userName" required autofocus>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder="Password" ng-model="vm.loginData.password" required>
+      </div>
+    </div>
+    <div class="footer">
+      <button ng-click="vm.login()" type="submit" class="btn bg-olive btn-block">Sign me in</button>
+
+      <a ui-sref="register" class="text-center">Register an account</a>
+    </div>
+  </form>
+</div>

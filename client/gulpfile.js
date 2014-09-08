@@ -44,6 +44,8 @@ function BuildStyles(dist) {
     .pipe(sourcemaps.init())
     .pipe(less())
 
+  stream.on('error', console.error.bind(console));
+
   if (dist === true) {
     stream = stream.pipe(minify()).pipe(rev());
   }
@@ -110,7 +112,7 @@ function BuildAll(dist) {
     .pipe(gulp.dest(dist === true ? './dist' : './build'));
 }
 
-gulp.task('less', function () {
+gulp.task('styles', function () {
   BuildStyles(false);
 });
 
@@ -148,7 +150,7 @@ gulp.task('jshint', function () {
 gulp.task('watch', function () {
   livereload.listen();
   gulp.watch(paths.index, ['build']);
-  gulp.watch(paths.less, ['styles']);
+  gulp.watch('src/**/*.less', ['styles']);
   gulp.watch(paths.js, ['jshint', 'scripts']);
   gulp.watch(paths.templates, ['scripts']);
   gulp.watch('build/**').on('change', livereload.changed);

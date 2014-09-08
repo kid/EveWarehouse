@@ -1,0 +1,25 @@
+<div class="form-box" id="login-box" ng-controller="RegistrationController as vm">
+  <div class="header">
+    Register New Membership
+  </div>
+  <form role="form">
+    <div class="body bg-gray">
+      <div class="form-group">
+        <input class="form-control" type="text" name="userName" placeholder="Username" ng-model="vm.registration.userName" required autofocus>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="email" name="email" placeholder="Email" ng-model="vm.registration.email" required>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="password" name="password" placeholder="Password" ng-model="vm.registration.password" required>
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="password" name="confirmPassword" placeholder="Confirm password" ng-model="vm.registration.confirmPassword" required>
+      </div>
+    </div>
+    <div class="footer">
+      <button type="submit" class="btn bg-olive btn-block" ng-click="vm.register()">Sign me up</button>
+      <a ui-sref="login">I already have a membership</a>
+    </div>
+  </form>
+</div>

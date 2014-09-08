@@ -14,6 +14,7 @@
 
     vm.registration = {
       userName: '',
+      email: '',
       password: '',
       confirmPassword: ''
     };
@@ -29,7 +30,7 @@
               $state.go('home');
             });
           },
-          function () {
+          function (response) {
             var errors = [];
             for (var key in response.data.modelState) {
               for (var i = 0; i < response.data.modelState[key].length; i++) {
@@ -39,14 +40,6 @@
             vm.errorMessage = 'Failed to register user du to: ' + errors.join(' ');
           }
       );
-
-      authService.login(vm.loginData).then(
-        function () {
-          $state.go('home');
-        },
-        function (error) {
-          vm.errorMessage = error.error_description;
-        });
     }
   }
 

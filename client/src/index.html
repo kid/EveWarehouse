@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app" ng-class="{'bg-black': isDarkBackground}">
 
 <head>
   <meta charset="utf-8">
@@ -11,7 +11,7 @@
   <!-- endinject -->
 </head>
 
-<body ng-app="app">
+<body ng-class="{'bg-black': isDarkBackground}">
   <div ui-view></div>
 
   <!-- inject:js -->

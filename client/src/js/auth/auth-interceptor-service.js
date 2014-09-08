@@ -12,7 +12,7 @@
     };
 
     function request(config) {
-      config.headers = config.haeders || {};
+      config.headers = config.headers || {};
 
       var authData = localStorageService.get('authorizationData');
       if (authData) {
