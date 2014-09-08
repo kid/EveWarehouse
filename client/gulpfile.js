@@ -6,6 +6,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
+var livereload = require('gulp-livereload');
 var sourcemaps = require('gulp-sourcemaps');
 var ngAnnotate = require('gulp-ng-annotate');
 var templateCache = require('gulp-angular-templatecache');
@@ -145,9 +146,12 @@ gulp.task('jshint', function () {
 });
 
 gulp.task('watch', function () {
+  livereload.listen();
+  gulp.watch(paths.index, ['build']);
   gulp.watch(paths.less, ['styles']);
   gulp.watch(paths.js, ['jshint', 'scripts']);
   gulp.watch(paths.templates, ['scripts']);
+  gulp.watch('build/**').on('change', livereload.changed);
 });
 
 gulp.task('default', ['clean', 'jshint', 'build', 'watch']);

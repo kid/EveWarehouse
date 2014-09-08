@@ -5,7 +5,7 @@
     .module('app.auth')
     .factory('authInterceptorService', authInterceptorServiceFactory);
 
-  function authInterceptorServiceFactory($q, $state, localStorageService) {
+  function authInterceptorServiceFactory($q, $injector, localStorageService) {
     var service = {
       request: request,
       responseError: responseError
@@ -24,7 +24,7 @@
 
     function responseError(rejection) {
       if (rejection.status === 401) {
-        $state.go('login');
+        $injector.get('$state').go('login');
       }
 
       return $q.reject(rejection);
