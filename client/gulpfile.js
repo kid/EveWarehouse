@@ -23,6 +23,10 @@ var paths = {
     css: './dist/css/',
     js: './dist/js/',
   },
+  build: {
+    css: './build/css/',
+    js: './build/js/'
+  },
   vendor: {
     // Use already minified version
     js: [
@@ -33,67 +37,104 @@ var paths = {
   }
 };
 
-function BuildStyles() {
-  return gulp
+function BuildStyles(dist) {
+  var stream = gulp
     .src(paths.less)
     .pipe(sourcemaps.init())
     .pipe(less())
-    .pipe(minify())
-    .pipe(rev())
+
+  if (dist === true) {
+    stream = stream.pipe(minify()).pipe(rev());
+  }
+
+  return stream
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(paths.dist.css));
+    .pipe(gulp.dest(dist === true ? paths.dist.css : paths.build.css));
 }
 
-function BuildVendorsScripts() {
-  return gulp
+function BuildVendorsScripts(dist) {
+  var stream = gulp
     .src(paths.vendor.js)
     .pipe(sourcemaps.init())
-    .pipe(concat('vendor.js'))
-    .pipe(rev())
+    .pipe(concat('vendor.js'));
+
+  if (dist === true) {
+    stream = stream.pipe(rev());
+  }
+
+  return stream
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(paths.dist.js));
+    .pipe(gulp.dest(dist === true ? paths.dist.js : paths.build.js));
 }
 
-function BuildScripts() {
+function BuildScripts(dist) {
   var scriptsStream = gulp.src(paths.js);
   var templatesStream = gulp.src(paths.templates).pipe(templateCache({
     module: 'app'
   }));
 
-  return es.merge(scriptsStream, templatesStream)
+  var stream = es.merge(scriptsStream, templatesStream)
     .pipe(order([
       'app.js',
       'templates.js'
     ]))
     .pipe(sourcemaps.init())
-    .pipe(concat('app.js'))
-    .pipe(ngAnnotate())
-    .pipe(uglify())
-    .pipe(rev())
+    .pipe(concat('app.js'));
+
+  if (dist === true) {
+    stream = stream.pipe(ngAnnotate())
+      .pipe(uglify())
+      .pipe(rev())
+  }
+
+  return stream
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(paths.dist.js));
+    .pipe(gulp.dest(dist === true ? paths.dist.js : paths.build.js));
 }
 
-gulp.task('build', function () {
-  var sources = es.merge(BuildStyles(), BuildVendorsScripts(), BuildScripts());
-  sources = sources.pipe(order([
-    'vendor-*.{css,js}',
-    'app-*.{css,js}'
-  ]));
+function BuildAll(dist) {
+  var sources = es
+    .merge(BuildStyles(dist), BuildVendorsScripts(dist), BuildScripts(dist))
+    .pipe(order([
+      'vendor*',
+      'app*'
+    ]));
 
-  gulp
+  return gulp
     .src(paths.index)
     .pipe(inject(sources, {
       relative: true,
-      ignorePath: '../dist'
+      ignorePath: dist === true ? '../dist' : '../build'
     }))
-    .pipe(gulp.dest('./dist'));
+    .pipe(gulp.dest(dist === true ? './dist' : './build'));
+}
+
+gulp.task('less', function () {
+  BuildStyles(false);
 });
 
+gulp.task('vendor', function () {
+  BuildVendorsScripts(false);
+});
+
+gulp.task('scripts', function () {
+  BuildScripts(false);
+})
+
+gulp.task('build', function () {
+  BuildAll(false);
+});
+
+gulp.task('dist', function () {
+  BuildAll(true);
+})
+
 gulp.task('clean', function () {
-  es.wait(gulp.src('./dist/js/*', './dist/css/*', {
+  es.wait(gulp.src('./dist', './dist', {
     read: false
-  }).pipe(rimraf()));
+  }).pipe(rimraf({
+    force: true
+  })));
 });
 
 gulp.task('jshint', function () {
@@ -104,7 +145,9 @@ gulp.task('jshint', function () {
 });
 
 gulp.task('watch', function () {
-  gulp.watch('src/**/*', ['clean', 'build']);
+  gulp.watch(paths.less, ['styles']);
+  gulp.watch(paths.js, ['jshint', 'scripts']);
+  gulp.watch(paths.templates, ['scripts']);
 });
 
 gulp.task('default', ['clean', 'jshint', 'build', 'watch']);
