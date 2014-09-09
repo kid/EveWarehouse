@@ -68,8 +68,8 @@ namespace EveWarehouse.Api
             builder.RegisterType<ApplicationUserManager>().InstancePerRequest();
 
             builder
-                .RegisterType<UserStore<ApplicationUser>>()
-                .AsImplementedInterfaces<IUserStore<ApplicationUser>, ConcreteReflectionActivatorData>()
+                .RegisterType<UserStore<User>>()
+                .AsImplementedInterfaces<IUserStore<User>, ConcreteReflectionActivatorData>()
                 .InstancePerRequest();
 
             builder.RegisterApiControllers(typeof(Startup).Assembly);

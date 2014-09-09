@@ -1,6 +1,6 @@
 ﻿namespace EveWarehouse.Infrastructure.Identity
 {
-    public class ApplicationUser : IdentityUser
+    public class User : IdentityUser
     {
     }
 }

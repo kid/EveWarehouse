@@ -26,7 +26,7 @@ namespace EveWarehouse.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var identityUser = new ApplicationUser
+            var identityUser = new User
                 {
                     UserName = userModel.UserName
                 };

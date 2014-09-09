@@ -2,9 +2,9 @@
 
 namespace EveWarehouse.Infrastructure.Identity
 {
-    public class ApplicationUserManager : UserManager<ApplicationUser>
+    public class ApplicationUserManager : UserManager<User>
     {
-        public ApplicationUserManager(IUserStore<ApplicationUser> userStore)
+        public ApplicationUserManager(IUserStore<User> userStore)
             : base(userStore)
         {
         }

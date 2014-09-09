@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
-MinimumVisualStudioVersion = 10.0.40219.1
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{0FB9C22D-12DF-4893-87C8-DD07F37D4E98}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -13,6 +11,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveWarehouse.Api", "EveWarehouse.Api\EveWarehouse.Api.csproj", "{69D5FEDC-319D-4F92-96CB-9EE48CF76E8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveWarehouse.Infrastructure", "EveWarehouse.Infrastructure\EveWarehouse.Infrastructure.csproj", "{AA953475-9F48-482D-925A-E10EEC04FF82}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EveWarehouse.Domain", "EveWarehouse.Domain\EveWarehouse.Domain.fsproj", "{CBD26B37-B5A0-4A72-A6E4-C0DBFD839F95}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +28,10 @@ Global
 		{AA953475-9F48-482D-925A-E10EEC04FF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA953475-9F48-482D-925A-E10EEC04FF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA953475-9F48-482D-925A-E10EEC04FF82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD26B37-B5A0-4A72-A6E4-C0DBFD839F95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD26B37-B5A0-4A72-A6E4-C0DBFD839F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD26B37-B5A0-4A72-A6E4-C0DBFD839F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD26B37-B5A0-4A72-A6E4-C0DBFD839F95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
