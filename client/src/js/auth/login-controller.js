@@ -5,7 +5,7 @@
     .module('app.auth')
     .controller('LoginController', LoginController);
 
-  function LoginController($state, authService) {
+  function LoginController($rootScope, $state, authService) {
 
     /* jshint validthis: true */
     var vm = this;
