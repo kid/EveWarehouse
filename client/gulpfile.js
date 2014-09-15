@@ -94,10 +94,11 @@ function BuildScripts(dist) {
       'templates.js'
     ]))
     .pipe(sourcemaps.init())
-    .pipe(concat('app.js'));
+    .pipe(concat('app.js'))
+    .pipe(ngAnnotate());
 
   if (dist === true) {
-    stream = stream.pipe(ngAnnotate())
+    stream = stream
       .pipe(uglify())
       .pipe(rev())
   }
