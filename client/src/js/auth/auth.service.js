@@ -6,24 +6,22 @@
     .factory('authService', authService);
 
   function authService($http, $q, localStorageService, API_ROOT_URL) {
+
     var service = {
       authentication: {
         isAuthenticated: false,
         userName: ''
       },
-      register: register,
+
       login: login,
       logout: logout,
+      register: register,
       fillAuthData: fillAuthData
     };
 
-    function register(registrationData) {
-      service.logout();
+    return service;
 
-      return $http.post(API_ROOT_URL + 'accounts/register', registrationData).then(function (response) {
-        return response;
-      });
-    }
+    ///////////////
 
     function login(loginData) {
       var deferred = $q.defer();
@@ -61,6 +59,14 @@
       service.authentication.userName = '';
     }
 
+    function register(registrationData) {
+      service.logout();
+
+      return $http.post(API_ROOT_URL + 'accounts/register', registrationData).then(function (response) {
+        return response;
+      });
+    }
+
     function fillAuthData() {
       var authData = localStorageService.get('authorizationData');
       if (authData) {
@@ -68,8 +74,6 @@
         service.authentication.userName = authData.userName;
       }
     }
-
-    return service;
   }
 
 })();

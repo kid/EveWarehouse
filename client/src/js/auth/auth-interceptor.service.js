@@ -6,10 +6,15 @@
     .factory('authInterceptorService', authInterceptorServiceFactory);
 
   function authInterceptorServiceFactory($q, $injector, localStorageService) {
+
     var service = {
       request: request,
       responseError: responseError
     };
+
+    return service;
+
+    ///////////////
 
     function request(config) {
       config.headers = config.headers || {};
@@ -29,8 +34,6 @@
 
       return $q.reject(rejection);
     }
-
-    return service;
   }
 
 })();

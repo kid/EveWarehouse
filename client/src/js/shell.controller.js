@@ -6,7 +6,6 @@
     .controller('ShellController', ShellController);
 
   function ShellController($state, authService) {
-
     /* jshint validthis: true */
     var vm = this;
 

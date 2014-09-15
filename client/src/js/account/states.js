@@ -14,7 +14,7 @@
       url: '/apiKeys',
       views: {
         'page-content': {
-          template: 'foobar'
+          templateUrl: 'account/api-key.html'
         }
       },
       data: {
