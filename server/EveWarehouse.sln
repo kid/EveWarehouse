@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveWarehouse.Infrastructure
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EveWarehouse.Domain", "EveWarehouse.Domain\EveWarehouse.Domain.fsproj", "{CBD26B37-B5A0-4A72-A6E4-C0DBFD839F95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveWarehouse.Domain.Source", "EveWarehouse.Domain.Source\EveWarehouse.Domain.Source.csproj", "{B9FB8465-CCA8-4DCC-89AF-29A9FC5B3014}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{CBD26B37-B5A0-4A72-A6E4-C0DBFD839F95}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBD26B37-B5A0-4A72-A6E4-C0DBFD839F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBD26B37-B5A0-4A72-A6E4-C0DBFD839F95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9FB8465-CCA8-4DCC-89AF-29A9FC5B3014}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FB8465-CCA8-4DCC-89AF-29A9FC5B3014}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FB8465-CCA8-4DCC-89AF-29A9FC5B3014}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FB8465-CCA8-4DCC-89AF-29A9FC5B3014}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -184,7 +184,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApiKeyController.cs" />
-    <Compile Include="Models\ApiKey.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -199,6 +198,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EveWarehouse.Domain.Source\EveWarehouse.Domain.Source.csproj">
+      <Project>{b9fb8465-cca8-4dcc-89af-29a9fc5b3014}</Project>
+      <Name>EveWarehouse.Domain.Source</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveWarehouse.Infrastructure\EveWarehouse.Infrastructure.csproj">
       <Project>{aa953475-9f48-482d-925a-e10eec04ff82}</Project>
       <Name>EveWarehouse.Infrastructure</Name>

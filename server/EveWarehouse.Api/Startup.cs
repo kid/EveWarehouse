@@ -2,9 +2,11 @@
 using Autofac.Builder;
 using Autofac.Core.Lifetime;
 using Autofac.Integration.WebApi;
+using EveWarehouse.Domain.Source.Models;
 using EveWarehouse.Infrastructure.EveLib;
 using EveWarehouse.Infrastructure.Identity;
 using EveWarehouse.Infrastructure.Identity.Providers;
+using EveWarehouse.Infrastructure.Storage;
 using eZet.EveLib.Core.Cache;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
@@ -66,6 +68,9 @@ namespace EveWarehouse.Api
             builder.RegisterType<AzureRedisCache>().As<IEveLibCache>().SingleInstance();
 
             builder.RegisterType<ApplicationUserManager>().InstancePerRequest();
+
+            builder.RegisterType<ApiKey.ApiKeyMapper>().AsImplementedInterfaces<IStorageKeysMapper<ApiKey>, ConcreteReflectionActivatorData>().InstancePerRequest();
+            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(Repository<>)).InstancePerRequest();
 
             builder
                 .RegisterType<UserStore<User>>()

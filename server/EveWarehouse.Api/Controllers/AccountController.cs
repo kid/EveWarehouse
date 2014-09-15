@@ -9,13 +9,12 @@ namespace EveWarehouse.Api.Controllers
     [RoutePrefix("api/accounts")]
     public class AccountController : ApiController
     {
-        private ApplicationUserManager _userManager;
+        private readonly ApplicationUserManager _userManager;
 
         public AccountController(ApplicationUserManager userManager)
         {
             _userManager = userManager;
         }
-
 
         [AllowAnonymous]
         [Route("register")]
@@ -33,12 +32,7 @@ namespace EveWarehouse.Api.Controllers
 
             var result = await _userManager.CreateAsync(identityUser, userModel.Password);
             var errorResult = GetErrorResult(result);
-            if (errorResult != null)
-            {
-                return errorResult;
-            }
-
-            return Ok();
+            return errorResult ?? Ok();
         }
 
         protected override void Dispose(bool disposing)
