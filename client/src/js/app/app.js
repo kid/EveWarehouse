@@ -18,7 +18,7 @@
   function RouterConfig($stateProvider, $urlRouterProvider) {
     $stateProvider.state('home', {
       abstract: true,
-      templateUrl: 'shell.html'
+      templateUrl: 'app/shell.html'
     });
 
     $stateProvider.state('home.dashboard', {

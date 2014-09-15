@@ -6,12 +6,12 @@
   function RouterConfig($stateProvider) {
     $stateProvider.state('login', {
       url: '/login',
-      templateUrl: 'auth/login.html'
+      templateUrl: 'app/auth/login.html'
     });
 
     $stateProvider.state('register', {
       url: '/register',
-      templateUrl: 'auth/register.html'
+      templateUrl: 'app/auth/register.html'
     });
   }
 }());

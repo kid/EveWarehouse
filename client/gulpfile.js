@@ -90,7 +90,7 @@ function BuildScripts(dist) {
 
   var stream = es.merge(scriptsStream, templatesStream)
     .pipe(order([
-      'app.js',
+      'app/app.js',
       'templates.js'
     ]))
     .pipe(sourcemaps.init())

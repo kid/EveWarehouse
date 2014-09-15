@@ -7,14 +7,14 @@
     $stateProvider.state('account', {
       url: '/account',
       abstract: true,
-      templateUrl: 'shell.html'
+      templateUrl: 'app/shell.html'
     });
 
     $stateProvider.state('account.apiKeys', {
       url: '/apiKeys',
       views: {
         'page-content': {
-          templateUrl: 'account/api-key.html'
+          templateUrl: 'app/account/api-key.html'
         }
       },
       data: {
