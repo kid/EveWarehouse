@@ -4,26 +4,18 @@
   angular
     .module('app', [
       'app.auth',
+      'app.account',
       'app.home',
       'ui.router',
+      'ui.bootstrap',
       'LocalStorageModule'
     ])
-    .constant('API_ROOT_URL', 'https://evewarehouse.azurewebsites.net/api/')
+    .constant('API_ROOT_URL', '/EveWarehouse.Api/api/')
     .config(RouterConfig)
     .config(HttpProviderConfig)
     .run(OnRun);
 
   function RouterConfig($stateProvider, $urlRouterProvider) {
-    $stateProvider.state('login', {
-      url: '/login',
-      templateUrl: 'auth/login.html'
-    });
-
-    $stateProvider.state('register', {
-      url: '/register',
-      templateUrl: 'auth/register.html'
-    });
-
     $stateProvider.state('home', {
       abstract: true,
       templateUrl: 'shell.html'
@@ -32,27 +24,31 @@
     $stateProvider.state('home.dashboard', {
       url: '/home',
       views: {
-        'content': {
+        'page-content': {
           template: '<h1>foo</h1>'
         }
       }
     });
+
+
   }
 
   function HttpProviderConfig($httpProvider) {
     $httpProvider.interceptors.push('authInterceptorService');
   }
 
-  function OnRun($rootScope, authService) {
+  function OnRun($rootScope, $state, authService) {
     var darkPages = ['login', 'register'];
 
+    $rootScope.$state = $state;
     $rootScope.skin = 'black';
 
     $rootScope.$on('$stateChangeStart', function (event, toState) {
-      $rootScope.isDarkBackground = darkPages.indexOf(toState.name) !== -1;
+      $rootScope.isDarkBackground = toState && toState.name && darkPages.indexOf(toState.name) !== -1;
     });
 
     authService.fillAuthData();
-  }
 
-})();
+    window.$rootScope = $rootScope;
+  }
+}());

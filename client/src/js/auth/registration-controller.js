@@ -27,7 +27,7 @@
         .then(
           function () {
             authService.login(vm.registration).then(function () {
-              $state.go('home');
+              $state.go('home.dashboard');
             });
           },
           function (response) {

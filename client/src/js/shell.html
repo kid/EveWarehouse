@@ -1,29 +1,32 @@
-<header class="header" ng-controller="ShellController as shell">
-  <a ui-sref="home.dashboard" class="logo">EveWarehouse</a>
-  <nav class="navbar navbar-static-top" role="navigation">
-    <a href="#" class="navbar-btn sidebar-toggle" role="button">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </a>
-    <div class="navbar-right">
-      <ul class="nav navbar-nav">
-        <li class="dropdown user user-menu">
-          <a class="dropdown-toggle">
-            <i class="glyphicon glyphicon-user"></i>
-            <span>
-              {{ shell.authentication.userName }} <i class="caret"></i>
-            </span>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</header>
-<div class="wrapper row-offcanvas row-offcanvas-left">
-  <aside class="left-side sidebar-off-canvas">
-    <section class="sidebar">
+<div ng-controller="ShellController as shell">
+
+  <header class="header">
+    <a ui-sref="home.dashboard" class="logo">EveWarehouse</a>
+    <nav class="navbar navbar-static-top" role="navigation">
+      <a href="#" class="navbar-btn sidebar-toggle" role="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <div class="navbar-right">
+        <ul class="nav navbar-nav">
+          <li class="dropdown user user-menu">
+            <a class="dropdown-toggle">
+              <i class="glyphicon glyphicon-user"></i>
+              <span>
+                {{ shell.authentication.userName }} <i class="caret"></i>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <div class="wrapper row-offcanvas row-offcanvas-left">
+    <aside class="left-side sidebar-off-canvas">
+      <section class="sidebar">
+        <!-- 
       <form class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search...">
@@ -33,7 +36,41 @@
           </span>
         </div>
       </form>
-    </section>
-  </aside>
-  <aside class="right-side" ui-view="content"></aside>
+      -->
+        <ul class="sidebar-menu">
+          <li ui-sref-active="active">
+            <a ui-sref="home.dashboard">
+              <i class="fa fa-dashboard"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="treeview" ng-init="collapsed = !$state.includes('account')" ng-class="{'active': !collapsed || $state.includes('account')}">
+            <a ng-click="collapsed = !collapsed">
+              <i class="fa fa-user"></i>
+              <span>Account</span>
+              <i class="fa pull-right" ng-class="collapsed ? 'fa-angle-left' : 'fa-angle-down'"></i>
+            </a>
+            <ul class="treeview-menu" collapse="collapsed">
+              <li ui-sref-active>
+                <a ui-sref="account.apiKeys">
+                  <i class="fa fa-angle-double-right"></i>
+                  API Keys
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+    </aside>
+    <aside class="right-side" ui-view="page">
+      <section class="content-header" ng-if="$state.current.data.header">
+        <h1>
+          {{$state.current.data.header.title}}
+          <small>{{$state.current.data.header.sub}}</small>
+        </h1>
+      </section>
+      <section class="content" ui-view="page-content"></section>
+    </aside>
+  </div>
+
 </div>

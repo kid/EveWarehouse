@@ -35,6 +35,7 @@ var paths = {
     js: [
       './bower_components/angular/angular.min.js',
       './bower_components/angular-ui-router/release/angular-ui-router.min.js',
+      './bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       './bower_components/angular-local-storage/angular-local-storage.min.js'
     ],
     fonts: [

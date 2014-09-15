@@ -22,7 +22,7 @@
     function login() {
       authService.login(vm.loginData).then(
         function () {
-          $state.go('home');
+          $state.go('home.dashboard');
         },
         function (error) {
           vm.errorMessage = error.error_description;
