@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('app.account').factory('apiKeyService', apiKeyService);
+  angular.module('app.keyManagement').factory('apiKeyService', apiKeyService);
 
   function apiKeyService($http, $log, API_ROOT_URL) {
     var service = {

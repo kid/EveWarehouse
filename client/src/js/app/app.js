@@ -4,7 +4,7 @@
   angular
     .module('app', [
       'app.auth',
-      'app.account',
+      'app.keyManagement',
       'app.home',
       'ui.router',
       'ui.bootstrap',

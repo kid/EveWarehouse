@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('app.account').config(RouterConfig);
+  angular.module('app.keyManagement').config(RouterConfig);
 
   function RouterConfig($stateProvider) {
     $stateProvider.state('account', {
@@ -14,7 +14,7 @@
       url: '/apiKeys',
       views: {
         'page-content': {
-          templateUrl: 'app/account/api-key.html'
+          templateUrl: 'app/key-management/api-key.html'
         }
       },
       data: {

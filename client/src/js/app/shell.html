@@ -46,15 +46,15 @@
           </li>
           <li class="treeview" ng-init="collapsed = !$state.includes('account')" ng-class="{'active': !collapsed || $state.includes('account')}">
             <a ng-click="collapsed = !collapsed">
-              <i class="fa fa-user"></i>
-              <span>Account</span>
+              <i class="fa fa-key"></i>
+              <span>Key Management</span>
               <i class="fa pull-right" ng-class="collapsed ? 'fa-angle-left' : 'fa-angle-down'"></i>
             </a>
             <ul class="treeview-menu" collapse="collapsed">
               <li ui-sref-active>
                 <a ui-sref="account.apiKeys">
                   <i class="fa fa-angle-double-right"></i>
-                  API Keys
+                  List all keys
                 </a>
               </li>
             </ul>
