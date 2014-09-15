@@ -35,7 +35,7 @@
         })
         .success(function (response) {
           localStorageService.set('authorizationData', {
-            token: response.access_token,
+            token: response.access_token, // jshint ignore:line
             userName: loginData.userName,
           });
 

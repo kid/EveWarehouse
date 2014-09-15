@@ -25,7 +25,7 @@
       return $http
         .get(API_ROOT_URL + 'apiKeys')
         .success(function (data) {
-          vm.keys = data;
+          service.keys = data;
         })
         .error(function (error) {
           // TODO decides what to do here.

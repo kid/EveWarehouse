@@ -32,11 +32,13 @@
           },
           function (response) {
             var errors = [];
-            for (var key in response.data.modelState) {
-              for (var i = 0; i < response.data.modelState[key].length; i++) {
-                errors.push(response.data.modelState[key][i]);
-              }
-            }
+
+            angular.forEach(response.data.modelState, function (items) {
+              angular.forEach(items, function (item) {
+                errors.push(item);
+              });
+            });
+
             vm.errorMessage = 'Failed to register user du to: ' + errors.join(' ');
           }
       );

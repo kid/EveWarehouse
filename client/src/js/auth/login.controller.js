@@ -20,13 +20,15 @@
     vm.errorMessage = '';
 
     function login() {
-      authService.login(vm.loginData).then(
-        function () {
-          $state.go('home.dashboard');
-        },
-        function (error) {
-          vm.errorMessage = error.error_description;
-        });
+      authService.login(vm.loginData).then(loginSuccess, loginFailure);
+
+      function loginSuccess() {
+        $state.go('home.dashboard');
+      }
+
+      function loginFailure(error) {
+        vm.errorMessage = error.error_description; // jshint ignore:line
+      }
     }
   }
 
