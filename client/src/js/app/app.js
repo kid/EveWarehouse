@@ -4,8 +4,9 @@
   angular
     .module('app', [
       'app.auth',
-      'app.keyManagement',
-      'app.home',
+      'app.layout',
+      'app.dashboard',
+      'app.keys',
       'ui.router',
       'ui.bootstrap',
       'LocalStorageModule'
@@ -16,18 +17,9 @@
     .run(OnRun);
 
   function RouterConfig($stateProvider, $urlRouterProvider) {
-    $stateProvider.state('home', {
+    $stateProvider.state('app', {
       abstract: true,
-      templateUrl: 'app/shell.html'
-    });
-
-    $stateProvider.state('home.dashboard', {
-      url: '/home',
-      views: {
-        'page-content': {
-          template: '<h1>foo</h1>'
-        }
-      }
+      templateUrl: 'app/layout/shell.html'
     });
   }
 

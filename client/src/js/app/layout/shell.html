@@ -39,22 +39,28 @@
       -->
         <ul class="sidebar-menu">
           <li ui-sref-active="active">
-            <a ui-sref="home.dashboard">
+            <a ui-sref="app.dashboard">
               <i class="fa fa-dashboard"></i>
               <span>Dashboard</span>
             </a>
           </li>
-          <li class="treeview" ng-init="collapsed = !$state.includes('account')" ng-class="{'active': !collapsed || $state.includes('account')}">
+          <li class="treeview" ng-init="collapsed = !$state.includes('app.keys')" ng-class="{'active': !collapsed || $state.includes('app.keys')}">
             <a ng-click="collapsed = !collapsed">
               <i class="fa fa-key"></i>
               <span>Key Management</span>
               <i class="fa pull-right" ng-class="collapsed ? 'fa-angle-left' : 'fa-angle-down'"></i>
             </a>
             <ul class="treeview-menu" collapse="collapsed">
-              <li ui-sref-active>
-                <a ui-sref="account.apiKeys">
+              <li ui-sref-active="active">
+                <a ui-sref="app.keys.list">
                   <i class="fa fa-angle-double-right"></i>
                   List all keys
+                </a>
+              </li>
+              <li ui-sref-active="active">
+                <a ui-sref="app.keys.new">
+                  <i class="fa fa-angle-double-right"></i>
+                  Add new key
                 </a>
               </li>
             </ul>

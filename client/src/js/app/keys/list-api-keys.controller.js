@@ -1,9 +1,9 @@
 (function () {
   'use strict';
 
-  angular.module('app.keyManagement').controller('ApiKeyList', ApiKeyList);
+  angular.module('app.keys').controller('ListApiKeys', ListApiKeys);
 
-  function ApiKeyList(apiKeyService) {
+  function ListApiKeys(apiKeyService) {
     /* jshint validthis: true */
     var vm = this;
 
