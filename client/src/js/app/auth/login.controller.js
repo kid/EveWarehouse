@@ -23,7 +23,7 @@
       authService.login(vm.loginData).then(loginSuccess, loginFailure);
 
       function loginSuccess() {
-        $state.go('home.dashboard');
+        $state.go('app.dashboard');
       }
 
       function loginFailure(error) {
