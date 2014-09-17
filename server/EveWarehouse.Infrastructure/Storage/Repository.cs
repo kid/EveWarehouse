@@ -1,7 +1,7 @@
 ﻿using Humanizer;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EveWarehouse.Infrastructure.Storage
@@ -36,12 +36,9 @@ namespace EveWarehouse.Infrastructure.Storage
             await _table.ExecuteAsync(TableOperation.Insert(entity));
         }
 
-        public async Task<IEnumerable<TEntity>> Query()
+        public IQueryable<TEntity> Query()
         {
-            var query = _table.CreateQuery<TEntity>();
-            var result = await query.ExecuteSegmentedAsync(null);
-
-            return result.Results;
+            return _table.CreateQuery<TEntity>();
         }
     }
 }

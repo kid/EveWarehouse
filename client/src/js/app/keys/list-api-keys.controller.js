@@ -8,11 +8,15 @@
     var vm = this;
 
     vm.keys = apiKeyService.keys;
-
+    window.vm = vm;
     activate();
 
     function activate() {
-      return apiKeyService.getKeys();
+      return apiKeyService.getKeys().then(activateSuccess);
+
+      function activateSuccess() {
+        vm.keys = apiKeyService.keys;
+      }
     }
   }
 }());
