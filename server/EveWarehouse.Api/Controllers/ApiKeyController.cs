@@ -1,11 +1,14 @@
-﻿using EveWarehouse.Domain.Source.Models;
-using EveWarehouse.Infrastructure.Storage;
+﻿using EveWarehouse.Infrastructure.Storage;
+using eZet.EveLib.Modules;
+using eZet.EveLib.Modules.Models.Account;
 using Microsoft.WindowsAzure.Storage.Table.Queryable;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
+using ApiKey = EveWarehouse.Domain.Source.Models.ApiKey;
 
 namespace EveWarehouse.Api.Controllers
 {
@@ -39,7 +42,13 @@ namespace EveWarehouse.Api.Controllers
                 return BadRequest(ModelState);
             }
 
+            var keyInfos = await GetKeyInfo(entity.Id, entity.Code);
+
             entity.UserId = GetUserId();
+            entity.KeyType = keyInfos.Key.Type;
+            entity.AccessMask = keyInfos.Key.AccessMask;
+            entity.ExpirationDate = keyInfos.Key.ExpireDate > DateTime.MinValue ? (DateTime?)keyInfos.Key.ExpireDate : null;
+
             await _repository.Insert(entity);
 
             return Ok();
@@ -55,6 +64,13 @@ namespace EveWarehouse.Api.Controllers
 
             var claim = claimIdentity.FindFirst("sub");
             return claim != null ? claim.Value : null;
+        }
+
+        private static async Task<ApiKeyInfo> GetKeyInfo(int id, string code)
+        {
+            var key = EveOnlineApi.CreateApiKey(id, code);
+            var result = await key.GetApiKeyInfoAsync();
+            return result.Result;
         }
     }
 }

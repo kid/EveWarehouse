@@ -1,6 +1,9 @@
 ﻿using EveWarehouse.Infrastructure.Storage;
+using eZet.EveLib.Modules;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace EveWarehouse.Domain.Source.Models
@@ -20,20 +23,34 @@ namespace EveWarehouse.Domain.Source.Models
             }
         }
 
-        public long Id { get; set; }
+        public int Id { get; set; }
         public string Code { get; set; }
         public string UserId { get; set; }
         public int AccessMask { get; set; }
         public DateTime? ExpirationDate { get; set; }
         public ApiKeyType KeyType { get; set; }
-    }
 
-    [Flags]
-    public enum ApiKeyType
-    {
-        None = 0,
-        Account = 1,
-        Character = 2,
-        Corporation = 4
+        public override void ReadEntity(IDictionary<string, EntityProperty> properties, OperationContext operationContext)
+        {
+            EntityProperty property;
+            if (!properties.TryGetValue("KeyType", out property))
+            {
+                return;
+            }
+
+            if (property.Int32Value != null)
+            {
+                KeyType = (ApiKeyType)property.Int32Value;
+            }
+
+            base.ReadEntity(properties, operationContext);
+        }
+
+        public override IDictionary<string, EntityProperty> WriteEntity(OperationContext operationContext)
+        {
+            var properties = base.WriteEntity(operationContext);
+            properties["KeyType"] = new EntityProperty((int)KeyType);
+            return properties;
+        }
     }
 }

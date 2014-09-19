@@ -17,8 +17,8 @@
             <tr ng-repeat="key in vm.keys">
               <td>{{ key.id }}</td>
               <td>{{ key.code }}</td>
-              <td>{{ key.expires }}</td>
-              <td>{{ key.type }}</td>
+              <td>{{ key.expirationDate ? key.expirationDate : 'Never' }}</td>
+              <td>{{ key.keyType }}</td>
             </tr>
           </table>
         </div>

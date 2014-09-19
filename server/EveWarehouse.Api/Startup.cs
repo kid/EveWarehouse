@@ -13,6 +13,8 @@ using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Microsoft.WindowsAzure.Storage;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Owin;
 using StackExchange.Redis;
 using System;
@@ -38,6 +40,11 @@ namespace EveWarehouse.Api
                 {
                     DependencyResolver = new AutofacWebApiDependencyResolver(container)
                 };
+
+#if DEBUG
+            config.Formatters.JsonFormatter.SerializerSettings.Formatting = Formatting.Indented;
+#endif
+            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new StringEnumConverter());
 
             ConfigureOAuth(app, container);
             WebApiConfig.Register(config);
