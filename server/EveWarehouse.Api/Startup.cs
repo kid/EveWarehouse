@@ -61,7 +61,7 @@ namespace EveWarehouse.Api
             var storageAccount = CloudStorageAccount.Parse(ConfigurationManager.ConnectionStrings["StorageConnectionString"].ConnectionString);
             builder.RegisterInstance(storageAccount).SingleInstance();
 
-            builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudFileClient()).AsSelf().InstancePerRequest();
+            builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudBlobClient()).AsSelf().InstancePerRequest();
             builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudQueueClient()).AsSelf().InstancePerRequest();
             builder.Register(context => context.Resolve<CloudStorageAccount>().CreateCloudTableClient()).AsSelf().InstancePerRequest();
 

@@ -1,17 +1,23 @@
 ﻿namespace EveWarehouse.Domain
 
-open Microsoft.WindowsAzure.Storage.Table
+open System
+open DigitallyCreated.FSharp.Azure.TableStorage;
 
 module Models = 
 
-    type ApiKey(id : int, code : string, userId : string) =
-        inherit TableEntity()
+    type ApiKeyType =
+        | Account
+        | Character
+        | Corporation
 
-        member val Id = id with get, set
-        member val Code = code with get, set
+    type ApiKey = {
+        [<PartitionKey>] UserId : string
+        [<RowKey>] Id : int
+        Code : string
+        KeyType : ApiKeyType
+        AccessMask : int
+        ExpirationDate : DateTime option
+    }
 
-        member this.UserId
-            with get () = this.PartitionKey
-            and set (value) = this.PartitionKey <- value
-
-        
+    module ApiKeyRepository =
+        ()
